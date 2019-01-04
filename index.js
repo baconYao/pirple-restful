@@ -17,11 +17,15 @@ const server = http.createServer(function(req, res) {
   // Get the HTTP method
   var method = req.method.toLowerCase();
 
+  // Get headers as an object
+  var headers = req.headers;
+
   // Send response
   res.end("Hello World\n");
 
   // Log the request path
   console.log('Request received on path: ' + trimmedPath + ", Request method: " + method + "\nWith query string parameters: ", queryStringObject);
+  console.log("Headers: ", headers);
 });
 
 // Start the server, and have it listen on port 3000
