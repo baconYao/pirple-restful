@@ -1,5 +1,6 @@
 const http = require("http");
 const url = require("url");
+const { StringDecoder } = require('string_decoder');
 
 // The server should response to all requests with a string
 const server = http.createServer(function(req, res) {
@@ -20,12 +21,24 @@ const server = http.createServer(function(req, res) {
   // Get headers as an object
   var headers = req.headers;
 
-  // Send response
-  res.end("Hello World\n");
+  // Get the payload, if any
+  var decoder = new StringDecoder('utf-8');     // 建立一個utf-8的decoder
+  var buffer = '';
+  req.on('data', function(jData) {               // 建立一個listener，監聽req發出的event，此event叫data，並調用callback function
+    buffer += decoder.write(jData);              // 將此json data (jData) 經由decoder轉換成utf-8編碼
+  });
 
-  // Log the request path
-  console.log('Request received on path: ' + trimmedPath + ", Request method: " + method + "\nWith query string parameters: ", queryStringObject);
-  console.log("Headers: ", headers);
+  req.on('end', function() {                     // 監聽req end event (此event必定每次都會被監聽到)
+    buffer += decoder.end();
+
+    // Send response
+    res.end("Hello World\n");
+
+    // Log the request path
+    console.log('Request received on path: ' + trimmedPath + ", Request method: " + method + "\nWith query string parameters: ", queryStringObject);
+    console.log("Headers: ", headers);
+    console.log("Payloads: ", buffer);
+  });
 });
 
 // Start the server, and have it listen on port 3000
