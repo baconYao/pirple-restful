@@ -8,13 +8,17 @@ const _data = require('./lib/data');
 
 // TESTING
 // @TODO delete this
-_data.create('test', 'newFile', {'foo': 'bar'}, function(err) {
-  console.log("Error message: ", err);
-});
+// _data.create('test', 'newFile', {'foo': 'bar'}, function(err) {
+//   console.log("Error message: ", err);
+// });
 
-_data.read('test', 'newFile', function(err, data) {
+// _data.read('test', 'newFile', function(err, data) {
+//   console.log("Error message: ", err);
+//   console.log("Data message: ", data);
+// });
+
+_data.update('test', 'newFile', {'fizz': 'buzz'}, function(err) {
   console.log("Error message: ", err);
-  console.log("Data message: ", data);
 });
 
 // Instaniate the HTTP server
