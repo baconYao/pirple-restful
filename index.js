@@ -12,6 +12,11 @@ _data.create('test', 'newFile', {'foo': 'bar'}, function(err) {
   console.log("Error message: ", err);
 });
 
+_data.read('test', 'newFile', function(err, data) {
+  console.log("Error message: ", err);
+  console.log("Data message: ", data);
+});
+
 // Instaniate the HTTP server
 const httpServer = http.createServer(function(req, res) {
   unifiedServer(req, res);
