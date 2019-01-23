@@ -2,8 +2,10 @@ const http = require("http");
 const https = require("https");
 const url = require("url");
 const { StringDecoder } = require('string_decoder');
-const config = require('./config');
 const fs = require('fs');
+
+const config = require('./config');
+const handlers = require('./lib/handlers');
 
 // Instaniate the HTTP server
 const httpServer = http.createServer(function(req, res) {
@@ -99,21 +101,8 @@ var unifiedServer = function(req, res) {
   });
 }
 
-// Define the handlers
-var handlers = {};
-
-// Ping handler
-handlers.ping = function(data, callback) {
-  // callback a http status code, and a payload object
-  callback(200);
-}
-
-// Not found handler
-handlers.notFound = function(data, callback) {
-  callback(404);
-}
-
 // Define a request router
 var router = {
-  'ping': handlers.ping
+  'ping': handlers.ping,
+  'users': handlers.users,
 };
